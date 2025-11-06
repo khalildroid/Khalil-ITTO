@@ -76,6 +76,13 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Simple grid for gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
     </style>
 </head>
 <body class="font-sans bg-brand-lightbg text-brand-darktext leading-relaxed">
@@ -106,12 +113,20 @@
                 <!-- About Me Card -->
                 <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
                     <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">ABOUT ME</h3>
-                    <p class="text-brand-lighttext mb-4">
-                        A 23-year-old content creator and university student located in Marrakesh, Morocco. Since 2017, I have been dedicated to making technology accessible to the Arabic-speaking community through my YouTube channel, "khalil ait...".
-                    </p>
-                    <p class="text-brand-lighttext">
-                        My professional background encompasses technology, education, and design.
-                    </p>
+                    <div class="space-y-4 text-brand-lighttext">
+                        <p>
+                            My name is Khalil Itto, and I am a 23-year-old content creator, university student, and multi-skilled professional from Marrakesh, Morocco. Since I launched my online presence in 2017, I have worked to establish myself as a helpful voice in the Arabic-speaking tech community, creating content specifically for beginners and students.
+                        </p>
+                        <p>
+                            With three years of experience as an IT and English teacher, I bring a strong educational foundation to my work. This is most evident on my YouTube channel, "khalil droid," where I create detailed tutorials on a wide range of technical subjects. My videos cover everything from installing Linux operating systems and understanding cybersecurity concepts like firewalls, to providing practical advice for students, such as how to navigate local university online platforms.
+                        </p>
+                        <p>
+                            In addition to my teaching and content creation, I am proficient in graphic design and have experience in the Print-on-Demand (POD) industry, which complements my online brand and merchandise store. My diverse skill set also extends to the Android development community, where I've been involved in projects related to the crDroid custom ROM.
+                        </p>
+                        <p>
+                            Overall, I am a dynamic young professional who is passionate about leveraging my experience in education, IT, and design to create accessible and valuable technological content for my growing audience.
+                        </p>
+                    </div>
                 </section>
 
                 <!-- Personal Skills Card -->
@@ -126,7 +141,20 @@
                         <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Computer Literacy</span>
                         <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Project Management Tools</span>
                         <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Strong Communication</span>
+                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Content Creation</span>
+                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Android ROMs</span>
                     </div>
+                </section>
+                
+                <!-- Khalil Droid Card -->
+                <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
+                    <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">KHALIL DROID - YOUTUBER</h3>
+                    <p class="text-brand-lighttext mb-4">
+                        On my YouTube channel, "khalil droid," I create detailed tutorials on a wide range of technical subjects for the Arabic-speaking community. My videos cover everything from Linux and cybersecurity to practical advice for students.
+                    </p>
+                    <a href="https://www.youtube.com/@khalildroid" target="_blank" rel="noopener noreferrer" class="inline-block bg-brand-accent text-white px-5 py-2 rounded-full font-semibold transition duration-200 hover:bg-opacity-80">
+                        Visit My Channel
+                    </a>
                 </section>
 
                 <!-- Work Experience Card -->
@@ -156,6 +184,21 @@
 
                     </div>
                 </section>
+
+                <!-- Gallery Card -->
+                <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
+                    <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">GALLERY</h3>
+                    <div class="gallery-grid">
+                        <!-- Images you uploaded -->
+                        <img src="photo_5_2025-11-06_14-41-58.jpg" alt="Gallery photo 1" class="w-full h-full object-cover rounded-lg shadow-md">
+                        <img src="photo_8_2025-11-06_14-41-58.jpg" alt="Gallery photo 2" class="w-full h-full object-cover rounded-lg shadow-md">
+                        <img src="photo_10_2025-11-06_14-41-58.jpg" alt="Gallery photo 3" class="w-full h-full object-cover rounded-lg shadow-md">
+                        <img src="photo_6_2025-11-06_14-41-58.jpg" alt="Gallery photo 4" class="w-full h-full object-cover rounded-lg shadow-md">
+                        <img src="photo_7_2025-11-06_14-41-58.jpg" alt="Gallery photo 5" class="w-full h-full object-cover rounded-lg shadow-md">
+                        <img src="photo_9_2025-11-06_14-41-58.jpg" alt="Gallery photo 6" class="w-full h-full object-cover rounded-lg shadow-md">
+                        <img src="photo_3_2025-11-06_14-41-58.jpg" alt="Gallery photo 7" class="w-full h-full object-cover rounded-lg shadow-md">
+                    </div>
+                </section>
             </div>
 
             <!-- === Right Column (Sidebar) === -->
@@ -164,10 +207,10 @@
                 <!-- Contact Card -->
                 <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
                     <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">CONTACT ME</h3>
-                    <div class="space-y-3">
+                    <div class="space-y-4">
                         <div>
                             <span class="font-semibold text-gray-600">Email:</span>
-                            <a href="mailto:khalil.ittox@gmail.com" class="block text-brand-lighttext hover:text-brand-accent break-all transition duration-200">khalil.ittox@gmail.com</a>
+                            <a href="mailto:khalilitto04@gmail.com" class="block text-brand-lighttext hover:text-brand-accent break-all transition duration-200">khalilitto04@gmail.com</a>
                         </div>
                         <div>
                             <span class="font-semibold text-gray-600">Phone:</span>
@@ -176,6 +219,29 @@
                         <div>
                             <span class="font-semibold text-gray-600">Location:</span>
                             <span class="block text-brand-lighttext">AIT OURIR AMEKDAR</span>
+                        </div>
+                        
+                        <!-- Social Links -->
+                        <div class="pt-4 border-t border-gray-200">
+                            <span class="font-semibold text-gray-600">Find me online:</span>
+                            <div class="flex space-x-4 mt-2">
+                                <!-- YouTube -->
+                                <a href="https://www.youtube.com/@khalildroid" target="_blank" rel="noopener noreferrer" class="text-brand-lighttext hover:text-brand-accent transition duration-200" title="YouTube">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.78 22 12 22 12s0 3.22-.418 4.814a2.506 2.506 0 0 1-1.768 1.768c-1.594.418-7.814.418-7.814.418s-6.22 0-7.814-.418a2.506 2.506 0 0 1-1.768-1.768C2.002 15.22 2 12 2 12s0-3.22.418-4.814a2.506 2.506 0 0 1 1.768-1.768C5.78 5.002 12 5.002 12 5.002s6.22 0 7.814.416ZM9.746 15.035l5.768-3.035-5.768-3.035v6.07Z" clip-rule="evenodd" /></svg>
+                                </a>
+                                <!-- GitHub -->
+                                <a href="https://github.com/khalildroid" target="_blank" rel="noopener noreferrer" class="text-brand-lighttext hover:text-brand-accent transition duration-200" title="GitHub">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.49.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.03-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.379.201 2.397.098 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0 0 22 12c0-5.523-4.477-10-10-10Z" clip-rule="evenodd" /></svg>
+                                </a>
+                                <!-- Facebook -->
+                                <a href="https://www.facebook.com/khalildroid/" target="_blank" rel="noopener noreferrer" class="text-brand-lighttext hover:text-brand-accent transition duration-200" title="Facebook">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.772-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12Z" clip-rule="evenodd" /></svg>
+                                </a>
+                                <!-- Instagram -->
+                                <a href="https://www.instagram.com/khalil.itto/" target="_blank" rel="noopener noreferrer" class="text-brand-lighttext hover:text-brand-accent transition duration-200" title="Instagram">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C8.134 2 7.807 2.014 6.904 2.058c-.902.043-1.513.198-2.02.388a3.72 3.72 0 0 0-1.42 1.42c-.19.507-.345 1.118-.388 2.02C2.014 7.807 2 8.134 2 12s.014 4.193.058 5.096c.043.902.198 1.513.388 2.02a3.72 3.72 0 0 0 1.42 1.42c.507.19 1.118.345 2.02.388C7.807 21.986 8.134 22 12 22s4.193-.014 5.096-.058c.902-.043 1.513-.198 2.02-.388a3.72 3.72 0 0 0 1.42-1.42c.19-.507.345-1.118.388-2.02C21.986 16.193 22 15.866 22 12s-.014-4.193-.058-5.096c-.043-.902-.198-1.513-.388-2.02a3.72 3.72 0 0 0-1.42-1.42c-.507-.19-1.118-.345-2.02-.388C16.193 2.014 15.866 2 12 2Zm0 1.802c3.804 0 4.084.015 4.96.072.85.056 1.306.21 1.62.338a1.91 1.91 0 0 1 .84.84c.128.313.282.77.338 1.62.057.877.072 1.156.072 4.96s-.015 4.084-.072 4.96c-.056.85-.21 1.306-.338 1.62a1.91 1.91 0 0 1-.84.84c-.313.128-.77.282-1.62.338-.877.057-1.156.072-4.96.072s-4.084-.015-4.96-.072c-.85-.056-1.306-.21-1.62-.338a1.91 1.91 0 0 1-.84-.84c-.128-.313-.282-.77-.338-1.62C4.015 16.084 4 15.804 4 12s.015-4.084.072-4.96c.056-.85.21-1.306.338-1.62a1.91 1.91 0 0 1 .84-.84c.313-.128.77-.282 1.62-.338C7.916 4.015 8.196 4 12 4Zm0 2.882a5.118 5.118 0 1 0 0 10.236 5.118 5.118 0 0 0 0-10.236Zm0 1.802a3.316 3.316 0 1 1 0 6.632 3.316 3.316 0 0 1 0-6.632Zm6.406-3.3a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" clip-rule="evenodd" /></svg>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -286,7 +352,7 @@
             // --- Typing Effect ---
             const typingTextElement = document.getElementById('typing-text');
             // Phrases from the resume
-            const phrases = ['WEB DEVELOPER', 'CONTENT CREATOR', 'GRAPHIC DESIGNER', 'IT EDUCATOR'];
+            const phrases = ['WEB DEVELOPER', 'CONTENT CREATOR', 'GRAPHIC DESIGNER', 'IT EDUCATOR', 'YOUTUBER'];
             let phraseIndex = 0;
             let charIndex = 0;
             let isDeleting = false;
