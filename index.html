@@ -45,6 +45,26 @@
             transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1); /* Animate the width */
         }
 
+        /* Typing effect styles */
+        .typing-container {
+            display: inline-block;
+            height: 2.25rem; /* Set a fixed height to prevent layout shift */
+        }
+        .typing-effect {
+            border-right: .15em solid #f6ad55; /* The cursor */
+            white-space: nowrap;
+            overflow: hidden;
+            letter-spacing: .1em;
+            animation: 
+                blink-caret .75s step-end infinite;
+        }
+
+        /* Cursor blink animation */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #f6ad55; }
+        }
+
         /* Animation classes for scroll-reveal */
         .animate-on-scroll {
             opacity: 0;
@@ -66,12 +86,14 @@
         <!-- Header Section -->
         <header class="flex flex-col md:flex-row items-center mb-12 animate-on-scroll">
             <!-- Profile Image Placeholder -->
-            <img src="https://placehold.co/150x150/f6ad55/ffffff?text=KI" 
+            <img src="khalidr.jpg" 
                  alt="Khalil Itto Profile" 
-                 class="w-36 h-36 md:w-48 md:h-48 rounded-full border-4 border-brand-accent shadow-lg mb-6 md:mb-0 md:mr-8">
+                 class="w-36 h-36 md:w-48 md:h-48 rounded-full border-4 border-brand-accent shadow-lg mb-6 md:mb-0 md:mr-8 object-cover">
             <div>
                 <h1 class="text-4xl md:text-5xl font-bold text-brand-darktext text-center md:text-left">KHALIL ITTO</h1>
-                <h2 class="text-2xl md:text-3xl font-light text-brand-accent text-center md:text-left">WEB DEVELOPER</h2>
+                <h2 class="text-2xl md:text-3xl font-light text-brand-accent text-center md:text-left typing-container">
+                    <span id="typing-text" class="typing-effect"></span>
+                </h2>
             </div>
         </header>
 
@@ -260,6 +282,57 @@
             progressBars.forEach(bar => {
                 progressObserver.observe(bar);
             });
+
+            // --- Typing Effect ---
+            const typingTextElement = document.getElementById('typing-text');
+            // Phrases from the resume
+            const phrases = ['WEB DEVELOPER', 'CONTENT CREATOR', 'GRAPHIC DESIGNER', 'IT EDUCATOR'];
+            let phraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function type() {
+                const currentPhrase = phrases[phraseIndex];
+                let displayText = '';
+
+                if (isDeleting) {
+                    // Deleting
+                    displayText = currentPhrase.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    // Typing
+                    displayText = currentPhrase.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                if (typingTextElement) {
+                    typingTextElement.textContent = displayText;
+                }
+
+                let typeSpeed = 150;
+                if (isDeleting) {
+                    typeSpeed /= 2; // Faster when deleting
+                }
+
+                // Check if word is complete
+                if (!isDeleting && charIndex === currentPhrase.length) {
+                    typeSpeed = 2000; // Pause at end of word
+                    isDeleting = true;
+                } 
+                // Check if word is fully deleted
+                else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length; // Move to next phrase
+                    typeSpeed = 500; // Pause before typing new word
+                }
+
+                setTimeout(type, typeSpeed);
+            }
+
+            // Start the typing effect
+            if (typingTextElement) {
+                type();
+            }
         });
     </script>
 </body>
