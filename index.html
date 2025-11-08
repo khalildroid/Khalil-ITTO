@@ -83,6 +83,57 @@
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 1rem;
         }
+
+        /* --- New Gallery Pop Effect --- */
+        .gallery-grid img {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .gallery-grid img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- New Lightbox Modal Styles --- */
+        #lightbox {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            box-sizing: border-box; /* Include padding in dimensions */
+        }
+        #lightbox.active {
+            display: flex; /* Show when active */
+        }
+        #lightbox-img {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 0.5rem;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body class="font-sans bg-brand-lightbg text-brand-darktext leading-relaxed">
@@ -191,7 +242,8 @@
                 <!-- Gallery Card -->
                 <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
                     <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">GALLERY</h3>
-                    <div class="gallery-grid">
+                    <!-- Added id="gallery" for the lightbox script -->
+                    <div class="gallery-grid" id="gallery">
                         <!-- Images you uploaded -->
                         <img src="photo_5_2025-11-06_14-41-58.jpg" alt="Gallery photo 1" class="w-full h-full object-cover rounded-lg shadow-md">
                         <img src="photo_8_2025-11-06_14-41-58.jpg" alt="Gallery photo 2" class="w-full h-full object-cover rounded-lg shadow-md">
@@ -205,6 +257,10 @@
                         <img src="IMG-20251108-WA0012.jpg" alt="Gallery photo 9" class="w-full h-full object-cover rounded-lg shadow-md">
                         <img src="IMG-20251108-WA0013.jpg" alt="Gallery photo 10" class="w-full h-full object-cover rounded-lg shadow-md">
                         <img src="IMG-20251108-WA0014.jpg" alt="Gallery photo 11" class="w-full h-full object-cover rounded-lg shadow-md">
+                        <!-- New certificate images added to gallery -->
+                        <img src="WhatsApp Image 2025-11-08 at 18.58.59_ba136a52.jpg" alt="CCNA Certificate" class="w-full h-full object-cover rounded-lg shadow-md">
+                        <img src="WhatsApp Image 2025-11-08 at 18.59.01_903f1229.jpg" alt="Oracle Certificate" class="w-full h-full object-cover rounded-lg shadow-md">
+                        <img src="WhatsApp Image 2025-11-08 at 18.59.02_dd8baae7.jpg" alt="CAEDEL Certificate" class="w-full h-full object-cover rounded-lg shadow-md">
                     </div>
                 </section>
             </div>
@@ -339,6 +395,11 @@
 
     </div>
 
+    <!-- New Lightbox Modal HTML (placed before the script) -->
+    <div id="lightbox">
+        <img id="lightbox-img" src="" alt="Enlarged gallery view">
+    </div>
+
     <!-- JavaScript for Animations -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -432,6 +493,31 @@
             if (typingTextElement) {
                 type();
             }
+
+            // --- New Lightbox Gallery Script ---
+            const gallery = document.getElementById('gallery');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+
+            if (gallery && lightbox && lightboxImg) {
+                // Add click listener to all images inside the gallery
+                gallery.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'IMG') {
+                        const imgSrc = e.target.getAttribute('src');
+                        lightboxImg.setAttribute('src', imgSrc);
+                        lightbox.classList.add('active');
+                    }
+                });
+
+                // Add click listener to the lightbox itself to close it
+                lightbox.addEventListener('click', (e) => {
+                    // Only close if the click is on the background (the modal itself)
+                    if (e.target.id === 'lightbox') {
+                        lightbox.classList.remove('active');
+                    }
+                });
+            }
+            
         });
     </script>
 </body>
