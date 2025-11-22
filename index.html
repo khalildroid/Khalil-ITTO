@@ -1,524 +1,674 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khalil Itto - Web Developer</title>
+    <title>Khalil Itto | Web Developer</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Inter font -->
+    <!-- Load Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Load Anime-style Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Custom Tailwind configuration -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Exo 2', 'sans-serif'],
+                        display: ['Orbitron', 'sans-serif'],
                     },
                     colors: {
-                        // Light mode theme
-                        brand: {
-                            lightbg: '#f7fafc', // gray-100
-                            cardbg: '#ffffff', // white
-                            accent: '#f6ad55', // Orange/gold accent
-                            darktext: '#2d3748', // gray-800
-                            lighttext: '#4a5568' // gray-700
+                        anime: {
+                            bg: '#0f0c29', // Deep dark purple/blue
+                            bg2: '#302b63',
+                            bg3: '#24243e',
+                            primary: '#ff00cc', // Neon Pink
+                            secondary: '#333399', // Deep Blue
+                            accent: '#00f2ff', // Cyan
+                            text: '#e0e0e0',
                         }
+                    },
+                    backgroundImage: {
+                        'anime-gradient': 'linear-gradient(to right, #0f0c29, #302b63, #24243e)',
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Simple styling for the progress bars */
-        .progress-bar {
-            background-color: #e2e8f0; /* gray-200 */
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-        .progress {
-            background-color: #f6ad55; /* brand-accent */
-            height: 10px;
-            border-radius: 9999px;
-            width: 0%; /* Start at 0% for animation */
-            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1); /* Animate the width */
+        ::-webkit-scrollbar-track {
+            background: #0f0c29;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #302b63;
+            border-radius: 0;
+            border: 1px solid #00f2ff;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff00cc;
         }
 
-        /* Typing effect styles */
-        .typing-container {
-            display: inline-block;
-            height: 2.25rem; /* Set a fixed height to prevent layout shift */
+        /* Background Grid Animation */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            animation: moveGrid 20s linear infinite;
         }
-        .typing-effect {
-            border-right: .15em solid #f6ad55; /* The cursor */
-            white-space: nowrap;
+        @keyframes moveGrid {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
+
+        /* Glassmorphism Card */
+        .anime-card {
+            background: rgba(48, 43, 99, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+            clip-path: polygon(
+                0 0, 
+                100% 0, 
+                100% calc(100% - 20px), 
+                calc(100% - 20px) 100%, 
+                0 100%
+            ); /* Mecha-style angled corner */
+            transition: all 0.3s ease;
+        }
+        .anime-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff00cc;
+            box-shadow: 0 0 20px rgba(255, 0, 204, 0.4);
+        }
+
+        /* Neon Text Glow */
+        .neon-text {
+            text-shadow: 0 0 5px rgba(0, 242, 255, 0.8), 0 0 10px rgba(0, 242, 255, 0.5);
+        }
+        .neon-text-pink {
+            text-shadow: 0 0 5px rgba(255, 0, 204, 0.8), 0 0 10px rgba(255, 0, 204, 0.5);
+        }
+
+        /* Typing Cursor */
+        .typing-cursor::after {
+            content: '_';
+            animation: blink 0.8s infinite;
+            color: #ff00cc;
+            font-weight: bold;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Button Style */
+        .anime-btn {
+            position: relative;
             overflow: hidden;
-            letter-spacing: .1em;
-            animation: 
-                blink-caret .75s step-end infinite;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.3s;
         }
-
-        /* Cursor blink animation */
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: #f6ad55; }
-        }
-
-        /* Animation classes for scroll-reveal */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-            will-change: opacity, transform;
-        }
-        .animate-on-scroll.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Simple grid for gallery */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1rem;
-        }
-
-        /* --- New Gallery Pop Effect --- */
-        .gallery-grid img {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-        .gallery-grid img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        /* --- New Lightbox Modal Styles --- */
-        #lightbox {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 1000;
-            left: 0;
+        .anime-btn::before {
+            content: '';
+            position: absolute;
             top: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            box-sizing: border-box; /* Include padding in dimensions */
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
         }
-        #lightbox.active {
-            display: flex; /* Show when active */
-        }
-        #lightbox-img {
-            margin: auto;
-            display: block;
-            max-width: 90%;
-            max-height: 90vh;
-            border-radius: 0.5rem;
-            animation: zoomIn 0.3s ease;
+        .anime-btn:hover::before {
+            left: 100%;
         }
 
-        @keyframes zoomIn {
-            from {
-                transform: scale(0.9);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
+        /* Image Glitch/Hover Effect */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        .gallery-item:hover {
+            border-color: #00f2ff;
+            box-shadow: 0 0 15px #00f2ff;
+        }
+        .gallery-item img {
+            transition: transform 0.5s ease;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+            filter: contrast(1.2) brightness(1.1);
+        }
+
+        /* Sidebar Link Active State */
+        .nav-link.active {
+            background: linear-gradient(90deg, rgba(255, 0, 204, 0.2), transparent);
+            border-left: 4px solid #ff00cc;
+            color: #fff;
         }
     </style>
 </head>
-<body class="font-sans bg-brand-lightbg text-brand-darktext leading-relaxed">
+<body class="bg-anime-bg text-anime-text font-sans selection:bg-anime-primary selection:text-white min-h-screen relative">
 
-    <!-- Main Container -->
-    <div class="max-w-6xl mx-auto p-6 md:p-12 overflow-x-hidden"> <!-- Added overflow-x-hidden -->
+    <!-- Animated Background Grid -->
+    <div class="fixed inset-0 bg-grid opacity-30 pointer-events-none z-0"></div>
+
+    <!-- Mobile Menu Button -->
+    <button id="menu-btn" class="fixed top-4 right-4 z-50 p-3 bg-anime-bg2 border border-anime-accent text-anime-accent rounded md:hidden hover:bg-anime-primary hover:text-white transition-all">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-anime-bg2/90 backdrop-blur-md border-r border-anime-secondary transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-40 flex flex-col justify-between p-6 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+        <div>
+            <div class="text-center mb-10 relative group">
+                <!-- Profile Image Container with Spinning Border -->
+                <div class="w-36 h-36 mx-auto mb-4 relative">
+                    <div class="absolute inset-0 rounded-full border-2 border-dashed border-anime-accent animate-[spin_10s_linear_infinite] opacity-50"></div>
+                    <div class="absolute inset-2 rounded-full border-2 border-anime-primary opacity-70"></div>
+                    <img src="khalidr.jpg" alt="Khalil Itto" class="absolute inset-3 w-[calc(100%-24px)] h-[calc(100%-24px)] rounded-full object-cover shadow-lg border-2 border-white">
+                </div>
+                <h2 class="text-2xl font-display font-bold text-white neon-text">KHALIL ITTO</h2>
+                <div class="h-1 w-20 bg-anime-primary mx-auto mt-2 rounded-full"></div>
+                <p class="text-xs text-anime-accent mt-2 font-mono tracking-widest">LVL. 23 DEV</p>
+            </div>
+
+            <nav>
+                <ul class="space-y-1">
+                    <li><a href="#home" class="nav-link flex items-center gap-3 px-4 py-3 hover:text-anime-primary transition-all duration-300 text-sm font-display uppercase tracking-widest"><i class="fas fa-home w-4 text-center"></i> Home</a></li>
+                    <li><a href="#about" class="nav-link flex items-center gap-3 px-4 py-3 hover:text-anime-primary transition-all duration-300 text-sm font-display uppercase tracking-widest"><i class="fas fa-user w-4 text-center"></i> About</a></li>
+                    <li><a href="#skills" class="nav-link flex items-center gap-3 px-4 py-3 hover:text-anime-primary transition-all duration-300 text-sm font-display uppercase tracking-widest"><i class="fas fa-bolt w-4 text-center"></i> Skills</a></li>
+                    <li><a href="#experience" class="nav-link flex items-center gap-3 px-4 py-3 hover:text-anime-primary transition-all duration-300 text-sm font-display uppercase tracking-widest"><i class="fas fa-briefcase w-4 text-center"></i> Quests</a></li>
+                    <li><a href="#certificates" class="nav-link flex items-center gap-3 px-4 py-3 hover:text-anime-primary transition-all duration-300 text-sm font-display uppercase tracking-widest"><i class="fas fa-scroll w-4 text-center"></i> Achievements</a></li>
+                    <li><a href="#gallery" class="nav-link flex items-center gap-3 px-4 py-3 hover:text-anime-primary transition-all duration-300 text-sm font-display uppercase tracking-widest"><i class="fas fa-images w-4 text-center"></i> Gallery</a></li>
+                    <li><a href="#contact" class="nav-link flex items-center gap-3 px-4 py-3 hover:text-anime-primary transition-all duration-300 text-sm font-display uppercase tracking-widest"><i class="fas fa-envelope w-4 text-center"></i> Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="text-center text-[10px] text-gray-500 mt-6 font-mono">
+            SYSTEM: ONLINE<br>&copy; 2025 KHALIL ITTO
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 min-h-screen relative z-10">
         
-        <!-- Header Section -->
-        <header class="flex flex-col md:flex-row items-center mb-12 animate-on-scroll">
-            <!-- Profile Image Placeholder -->
-            <img src="khalidr.jpg" 
-                 alt="Khalil Itto Profile" 
-                 class="w-36 h-36 md:w-48 md:h-48 rounded-full border-4 border-brand-accent shadow-lg mb-6 md:mb-0 md:mr-8 object-cover">
-            <div>
-                <h1 class="text-4xl md:text-5xl font-bold text-brand-darktext text-center md:text-left">KHALIL ITTO</h1>
-                <h2 class="text-2xl md:text-3xl font-light text-brand-accent text-center md:text-left typing-container">
-                    <span id="typing-text" class="typing-effect"></span>
+        <!-- Home / Hero Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center px-8 py-20 border-b border-anime-secondary/30 relative overflow-hidden">
+            <!-- Decorative Elements -->
+            <div class="absolute top-10 right-10 w-20 h-20 border-t-4 border-r-4 border-anime-accent opacity-50"></div>
+            <div class="absolute bottom-10 left-10 w-20 h-20 border-b-4 border-l-4 border-anime-primary opacity-50"></div>
+            
+            <div class="max-w-4xl w-full z-10 text-center md:text-left">
+                <p class="text-anime-accent font-mono mb-4 tracking-[0.2em] text-sm">/// SYSTEM INITIALIZED ///</p>
+                <h1 class="text-6xl md:text-8xl font-display font-black text-white mb-4 leading-tight neon-text">
+                    KHALIL<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-anime-primary to-purple-500">ITTO</span>
+                </h1>
+                <h2 class="text-2xl md:text-3xl font-display text-gray-300 mb-8">
+                    I am a <span class="text-anime-accent typing-cursor" id="typing-text"></span>
                 </h2>
-            </div>
-        </header>
-
-        <!-- Main Content Grid -->
-        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-            <!-- === Left Column (Main Content) === -->
-            <div class="lg:col-span-2 flex flex-col gap-8">
-
-                <!-- About Me Card -->
-                <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
-                    <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">ABOUT ME</h3>
-                    <div class="space-y-4 text-brand-lighttext">
-                        <p>
-                            My name is Khalil Itto, and I am a 23-year-old content creator, university student, and multi-skilled professional from Marrakesh, Morocco. Since I launched my online presence in 2017, I have worked to establish myself as a helpful voice in the Arabic-speaking tech community, creating content specifically for beginners and students.
-                        </p>
-                        <p>
-                            With three years of experience as an IT and English teacher, I bring a strong educational foundation to my work. This is most evident on my YouTube channel, "khalil droid," where I create detailed tutorials on a wide range of technical subjects. My videos cover everything from installing Linux operating systems and understanding cybersecurity concepts like firewalls, to providing practical advice for students, such as how to navigate local university online platforms.
-                        </p>
-                        <p>
-                            In addition to my teaching and content creation, I am proficient in graphic design and have experience in the Print-on-Demand (POD) industry, which complements my online brand and merchandise store. My diverse skill set also extends to the Android development community, where I've been involved in projects related to the crDroid custom ROM.
-                        </p>
-                        <p>
-                            Overall, I am a dynamic young professional who is passionate about leveraging my experience in education, IT, and design to create accessible and valuable technological content for my growing audience.
-                        </p>
-                    </div>
-                </section>
-
-                <!-- Personal Skills Card -->
-                <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
-                    <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">PERSONAL SKILLS</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Graphic Design</span>
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Design Thinking</span>
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">IT Nerd</span>
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Teaching</span>
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Problem-Solving</span>
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Computer Literacy</span>
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Project Management Tools</span>
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Strong Communication</span>
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Content Creation</span>
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Android ROMs</span>
-                        <!-- New Skills Added -->
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Photo retouching</span>
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Virtualization</span>
-                    </div>
-                </section>
-                
-                <!-- Khalil Droid Card -->
-                <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
-                    <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">KHALIL DROID - YOUTUBER</h3>
-                    <p class="text-brand-lighttext mb-4">
-                        On my YouTube channel, "khalil droid," I create detailed tutorials on a wide range of technical subjects for the Arabic-speaking community. My videos cover everything from Linux and cybersecurity to practical advice for students.
-                    </p>
-                    <a href="https://www.youtube.com/@khalildroid" target="_blank" rel="noopener noreferrer" class="inline-block bg-brand-accent text-white px-5 py-2 rounded-full font-semibold transition duration-200 hover:bg-opacity-80">
-                        Visit My Channel
+                <p class="text-lg text-gray-400 mb-10 max-w-2xl leading-relaxed border-l-2 border-anime-primary pl-4 mx-auto md:mx-0">
+                    Constructing digital realities and bridging the gap between humanity and technology. Mission: Empowering the Arabic-speaking community through code and education.
+                </p>
+                <div class="flex flex-wrap gap-6 justify-center md:justify-start">
+                    <a href="#contact" class="anime-btn px-8 py-3 bg-anime-primary text-white font-bold hover:bg-pink-600 transition-colors tracking-wider uppercase font-display">
+                        Start Mission
                     </a>
-                </section>
-
-                <!-- Work Experience Card -->
-                <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
-                    <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">WORK EXPERIENCE</h3>
-                    <div class="space-y-6">
-                        
-                        <!-- Job 1 -->
-                        <article>
-                            <h4 class="text-xl font-semibold text-brand-darktext">TEACHING ENGLISH / IT</h4>
-                            <span class="text-brand-accent text-sm font-medium">2019-2021 | 2023-2025</span>
-                            <ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-brand-lighttext">
-                                <li>Teaching English at a private center in Ait Ourir.</li>
-                                <li>Teaching basic IT at the same center for about 11 months.</li>
-                                <li>Teaching IT at the Center for Women in Need for over two years.</li>
-                            </ul>
-                        </article>
-
-                        <!-- Job 2 -->
-                        <article>
-                            <h4 class="text-xl font-semibold text-brand-darktext">GRAPHIC DESIGN</h4>
-                            <span class="text-brand-accent text-sm font-medium">2021-2025</span>
-                            <ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-brand-lighttext">
-                                <li>Created designs, posters, and social media posts for a center in 2021, and have been doing the same for a different center from 2023 to the present.</li>
-                            </ul>
-                        </article>
-
-                    </div>
-                </section>
-
-                <!-- Gallery Card -->
-                <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
-                    <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">GALLERY</h3>
-                    <!-- Added id="gallery" for the lightbox script -->
-                    <div class="gallery-grid" id="gallery">
-                        <!-- Images you uploaded -->
-                        <img src="photo_5_2025-11-06_14-41-58.jpg" alt="Gallery photo 1" class="w-full h-full object-cover rounded-lg shadow-md">
-                        <img src="photo_8_2025-11-06_14-41-58.jpg" alt="Gallery photo 2" class="w-full h-full object-cover rounded-lg shadow-md">
-                        <img src="photo_10_2025-11-06_14-41-58.jpg" alt="Gallery photo 3" class="w-full h-full object-cover rounded-lg shadow-md">
-                        <img src="photo_6_2025-11-06_14-41-58.jpg" alt="Gallery photo 4" class="w-full h-full object-cover rounded-lg shadow-md">
-                        <img src="photo_7_2025-11-06_14-41-58.jpg" alt="Gallery photo 5" class="w-full h-full object-cover rounded-lg shadow-md">
-                        <img src="photo_9_2025-11-06_14-41-58.jpg" alt="Gallery photo 6" class="w-full h-full object-cover rounded-lg shadow-md">
-                        <img src="photo_3_2025-11-06_14-41-58.jpg" alt="Gallery photo 7" class="w-full h-full object-cover rounded-lg shadow-md">
-                        <!-- New Gallery Images Added -->
-                        <img src="IMG-20251108-WA0009.jpg" alt="Gallery photo 8" class="w-full h-full object-cover rounded-lg shadow-md">
-                        <img src="IMG-20251108-WA0012.jpg" alt="Gallery photo 9" class="w-full h-full object-cover rounded-lg shadow-md">
-                        <img src="IMG-20251108-WA0013.jpg" alt="Gallery photo 10" class="w-full h-full object-cover rounded-lg shadow-md">
-                        <img src="IMG-20251108-WA0014.jpg" alt="Gallery photo 11" class="w-full h-full object-cover rounded-lg shadow-md">
-                        <!-- Added the 3 certificate images back -->
-                        <img src="WhatsApp Image 2025-11-08 at 18.58.59_8fd1205e.jpg" alt="CCNA Certificate" class="w-full h-full object-cover rounded-lg shadow-md">
-                        <img src="WhatsApp Image 2025-11-08 at 18.59.01_ad9fa44a.jpg" alt="Oracle Certificate" class="w-full h-full object-cover rounded-lg shadow-md">
-                        <img src="WhatsApp Image 2025-11-08 at 18.59.02_4950d841.jpg" alt="CAEDEL Certificate" class="w-full h-full object-cover rounded-lg shadow-md">
-                    </div>
-                </section>
+                    <a href="https://www.youtube.com/@khalildroid" target="_blank" class="anime-btn px-8 py-3 bg-transparent border border-anime-accent text-anime-accent font-bold hover:bg-anime-accent/10 transition-colors tracking-wider uppercase font-display flex items-center gap-2">
+                        <i class="fab fa-youtube"></i> Watch Data
+                    </a>
+                </div>
             </div>
+        </section>
 
-            <!-- === Right Column (Sidebar) === -->
-            <aside class="lg:col-span-1 flex flex-col gap-8">
-
-                <!-- Contact Card -->
-                <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
-                    <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">CONTACT ME</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <span class="font-semibold text-gray-600">Email:</span>
-                            <a href="mailto:khalilitto04@gmail.com" class="block text-brand-lighttext hover:text-brand-accent break-all transition duration-200">khalilitto04@gmail.com</a>
-                        </div>
-                        <div>
-                            <span class="font-semibold text-gray-600">Phone:</span>
-                            <span class="block text-brand-lighttext">+212613539159</span>
-                        </div>
-                        <div>
-                            <span class="font-semibold text-gray-600">Location:</span>
-                            <span class="block text-brand-lighttext">AIT OURIR AMEKDAR</span>
+        <!-- About Section -->
+        <section id="about" class="px-8 py-20 border-b border-anime-secondary/30">
+            <div class="max-w-5xl mx-auto">
+                <div class="mb-12 flex items-end gap-4">
+                    <h2 class="text-5xl font-display font-bold text-white neon-text-pink">01</h2>
+                    <h3 class="text-3xl font-display font-bold text-anime-accent uppercase">Character Info</h3>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <div class="anime-card p-8">
+                        <div class="space-y-6 text-gray-300 leading-relaxed">
+                            <p>
+                                <strong class="text-anime-primary">Identity:</strong> Khalil Itto. <br>
+                                <strong class="text-anime-primary">Class:</strong> Multi-skilled Professional. <br>
+                                <strong class="text-anime-primary">Base:</strong> Marrakesh, Morocco.
+                            </p>
+                            <p>
+                                Since <span class="font-mono text-anime-accent">2017</span>, I've been uploading data to the collective consciousness, specializing in making tech accessible. My background combines the logic of IT with the creativity of Graphic Design and the empathy of Teaching.
+                            </p>
+                            <p>
+                                Currently upgrading my stats at <span class="text-white font-bold">FLSH University</span> while running the "khalil droid" channel. I mod reality with custom Android ROMs and design visual assets for various factions (centers).
+                            </p>
                         </div>
                         
-                        <!-- Social Links -->
-                        <div class="pt-4 border-t border-gray-200">
-                            <span class="font-semibold text-gray-600">Find me online:</span>
-                            <div class="flex space-x-4 mt-2">
-                                <!-- YouTube -->
-                                <a href="https://www.youtube.com/@khalildroid" target="_blank" rel="noopener noreferrer" class="text-brand-lighttext hover:text-brand-accent transition duration-200" title="YouTube">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.78 22 12 22 12s0 3.22-.418 4.814a2.506 2.506 0 0 1-1.768 1.768c-1.594.418-7.814.418-7.814.418s-6.22 0-7.814-.418a2.506 2.506 0 0 1-1.768-1.768C2.002 15.22 2 12 2 12s0-3.22.418-4.814a2.506 2.506 0 0 1 1.768-1.768C5.78 5.002 12 5.002 12 5.002s6.22 0 7.814.416ZM9.746 15.035l5.768-3.035-5.768-3.035v6.07Z" clip-rule="evenodd" /></svg>
-                                </a>
-                                <!-- GitHub -->
-                                <a href="https://github.com/khalildroid" target="_blank" rel="noopener noreferrer" class="text-brand-lighttext hover:text-brand-accent transition duration-200" title="GitHub">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.49.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.03-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.026 2.747-1.026.546 1.379.201 2.397.098 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0 0 22 12c0-5.523-4.477-10-10-10Z" clip-rule="evenodd" /></svg>
-                                </a>
-                                <!-- Facebook -->
-                                <a href="https://www.facebook.com/khalildroid/" target="_blank" rel="noopener noreferrer" class="text-brand-lighttext hover:text-brand-accent transition duration-200" title="Facebook">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.772-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12Z" clip-rule="evenodd" /></svg>
-                                </a>
-                                <!-- Instagram -->
-                                <a href="https://www.instagram.com/khalil.itto/" target="_blank" rel="noopener noreferrer" class="text-brand-lighttext hover:text-brand-accent transition duration-200" title="Instagram">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C8.134 2 7.807 2.014 6.904 2.058c-.902.043-1.513.198-2.02.388a3.72 3.72 0 0 0-1.42 1.42c-.19.507-.345 1.118-.388 2.02C2.014 7.807 2 8.134 2 12s.014 4.193.058 5.096c.043.902.198 1.513.388 2.02a3.72 3.72 0 0 0 1.42 1.42c.507.19 1.118.345 2.02.388C7.807 21.986 8.134 22 12 22s4.193-.014 5.096-.058c.902-.043 1.513-.198 2.02-.388a3.72 3.72 0 0 0 1.42-1.42c.19-.507.345-1.118-.388-2.02C21.986 16.193 22 15.866 22 12s-.014-4.193-.058-5.096c-.043-.902-.198-1.513-.388-2.02a3.72 3.72 0 0 0-1.42-1.42c-.507-.19-1.118-.345-2.02-.388C16.193 2.014 15.866 2 12 2Zm0 1.802c3.804 0 4.084.015 4.96.072.85.056 1.306.21 1.62.338a1.91 1.91 0 0 1 .84.84c.128.313.282.77.338 1.62.057.877.072 1.156.072 4.96s-.015 4.084-.072 4.96c-.056.85-.21 1.306-.338 1.62a1.91 1.91 0 0 1-.84.84c-.313.128-.77.282-1.62.338-.877.057-1.156.072-4.96.072s-4.084-.015-4.96-.072c-.85-.056-1.306-.21-1.62-.338a1.91 1.91 0 0 1-.84-.84c-.128-.313-.282-.77-.338-1.62C4.015 16.084 4 15.804 4 12s.015-4.084.072-4.96c.056-.85.21-1.306.338-1.62a1.91 1.91 0 0 1 .84-.84c.313-.128.77-.282 1.62-.338C7.916 4.015 8.196 4 12 4Zm0 2.882a5.118 5.118 0 1 0 0 10.236 5.118 5.118 0 0 0 0-10.236Zm0 1.802a3.316 3.316 0 1 1 0 6.632 3.316 3.316 0 0 1 0-6.632Zm6.406-3.3a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z" clip-rule="evenodd" /></svg>
-                                </a>
-                                <!-- LinkedIn -->
-                                <a href="https://www.linkedin.com/in/khalil-itto" target="_blank" rel="noopener noreferrer" class="text-brand-lighttext hover:text-brand-accent transition duration-200" title="LinkedIn">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                </a>
+                        <div class="grid grid-cols-2 gap-4 mt-8 font-mono text-xs">
+                            <div class="p-2 border border-anime-secondary bg-anime-bg3/50">
+                                <span class="block text-gray-500">STATUS</span>
+                                <span class="text-anime-accent">ONLINE / OPEN TO WORK</span>
+                            </div>
+                            <div class="p-2 border border-anime-secondary bg-anime-bg3/50">
+                                <span class="block text-gray-500">EXP</span>
+                                <span class="text-anime-primary">6+ YEARS</span>
                             </div>
                         </div>
                     </div>
-                </section>
-
-                <!-- Education Card -->
-                <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
-                    <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">EDUCATION</h3>
-                    <ul class="space-y-3 list-disc list-inside text-brand-lighttext">
-                        <li>
-                            <span class="font-semibold">2021 - 2023:</span> 2 BACCALAUREATE DIPLOMAS
-                        </li>
-                        <li>FLSH University (BAC+1)</li>
-                        <!-- Removed certificate list from here -->
-                    </ul>
-                </section>
-
-                <!-- Certificates & Training Card -->
-                <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
-                    <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">CERTIFICATES & TRAINING</h3>
-                    <ul class="space-y-3 list-disc list-outside ml-5 text-brand-lighttext">
-                        <!-- Technical Certs -->
-                        <li>Cisco Certified Network Associate (CCNA) (Cybrary)</li>
-                        <li>Network Security (Mindluster)</li>
-                        <li>Oracle Cloud AI Certified Foundations Associate</li>
-                        <li>Attestation: BASIC I (Dell/EFE)</li>
-                        
-                        <!-- Participation & Other -->
-                        <li>Association Attestation (Karate)</li>
-                        <li>Certificate of Participation (Entrepreneurship - NDI)</li>
-                        <li>Certificate of Participation (ASAS Training)</li>
-                        <li>Certificate of Participation (Ministry of Youth)</li>
-                        <li>Certificate of Participation (Cultural Event)</li>
-                        <li>Certificate of Thanks and Appreciation</li>
-                        <!-- New Certificate Added -->
-                        <li>CAEDEL Entrepreneurship Program (BIDAYA)</li>
-                    </ul>
-                </section>
-
-                <!-- Language Skills Card -->
-                <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
-                    <h3 class="text-2xl font-semibold text-brand-accent mb-5 border-b border-brand-accent/50 pb-2">LANGUAGE SKILLS</h3>
-                    <div class="space-y-4">
-                        <!-- English -->
-                        <div>
-                            <span class="text-brand-lighttext font-medium">English</span>
-                            <div class="w-full progress-bar rounded-full mt-1">
-                                <div class="progress progress-fill" data-width="90%"></div>
-                            </div>
+                    
+                    <div class="relative group">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-anime-primary to-anime-accent rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                        <div class="relative">
+                            <img src="khalidr.jpg" alt="Khalil Portrait" class="w-full rounded-lg shadow-2xl object-cover border border-anime-secondary grayscale group-hover:grayscale-0 transition-all duration-500">
+                            <!-- Tech Overlay UI -->
+                            <div class="absolute top-4 right-4 w-16 h-16 border-t-2 border-r-2 border-anime-accent/50 rounded-tr-lg"></div>
+                            <div class="absolute bottom-4 left-4 w-16 h-16 border-b-2 border-l-2 border-anime-primary/50 rounded-bl-lg"></div>
                         </div>
-                        <!-- Arabic -->
-                        <div>
-                            <span class="text-brand-lighttext font-medium">Arabic</span>
-                            <div class="w-full progress-bar rounded-full mt-1">
-                                <div class="progress progress-fill" data-width="99%"></div>
-                            </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="px-8 py-20 border-b border-anime-secondary/30 relative">
+            <!-- Background Decor -->
+            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-anime-secondary/20 rounded-full blur-3xl -z-10"></div>
+
+            <div class="max-w-5xl mx-auto">
+                <div class="mb-12 flex items-end gap-4">
+                    <h2 class="text-5xl font-display font-bold text-white neon-text-pink">02</h2>
+                    <h3 class="text-3xl font-display font-bold text-anime-accent uppercase">Ability Tree</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Technical & Soft Skills -->
+                    <div>
+                        <h4 class="text-xl font-display font-bold text-white mb-6 flex items-center gap-2 border-b border-gray-700 pb-2">
+                            <i class="fas fa-microchip text-anime-primary"></i> Active Skills
+                        </h4>
+                        <div class="flex flex-wrap gap-3">
+                            <!-- Loop for skill tags with anime styling -->
+                            <span class="px-3 py-1 bg-anime-bg3 border border-anime-accent/30 text-anime-accent text-sm font-mono hover:bg-anime-accent hover:text-black transition-colors cursor-default clip-path-angle">Graphic Design</span>
+                            <span class="px-3 py-1 bg-anime-bg3 border border-anime-accent/30 text-anime-accent text-sm font-mono hover:bg-anime-accent hover:text-black transition-colors cursor-default clip-path-angle">IT Support</span>
+                            <span class="px-3 py-1 bg-anime-bg3 border border-anime-accent/30 text-anime-accent text-sm font-mono hover:bg-anime-accent hover:text-black transition-colors cursor-default clip-path-angle">Teaching</span>
+                            <span class="px-3 py-1 bg-anime-bg3 border border-anime-accent/30 text-anime-accent text-sm font-mono hover:bg-anime-accent hover:text-black transition-colors cursor-default clip-path-angle">Content Creation</span>
+                            <span class="px-3 py-1 bg-anime-bg3 border border-anime-accent/30 text-anime-accent text-sm font-mono hover:bg-anime-accent hover:text-black transition-colors cursor-default clip-path-angle">Problem Solving</span>
+                            <span class="px-3 py-1 bg-anime-bg3 border border-anime-accent/30 text-anime-accent text-sm font-mono hover:bg-anime-accent hover:text-black transition-colors cursor-default clip-path-angle">Android ROMs</span>
+                            <span class="px-3 py-1 bg-anime-bg3 border border-anime-accent/30 text-anime-accent text-sm font-mono hover:bg-anime-accent hover:text-black transition-colors cursor-default clip-path-angle">Photo Retouching</span>
+                            <span class="px-3 py-1 bg-anime-bg3 border border-anime-accent/30 text-anime-accent text-sm font-mono hover:bg-anime-accent hover:text-black transition-colors cursor-default clip-path-angle">Virtualization</span>
+                            <span class="px-3 py-1 bg-anime-bg3 border border-anime-accent/30 text-anime-accent text-sm font-mono hover:bg-anime-accent hover:text-black transition-colors cursor-default clip-path-angle">Linux</span>
                         </div>
-                        <!-- Tamazight -->
-                        <div>
-                            <span class="text-brand-lighttext font-medium">Tamazight</span>
-                            <div class="w-full progress-bar rounded-full mt-1">
-                                <div class="progress progress-fill" data-width="75%"></div>
+                    </div>
+
+                    <!-- Language Bars -->
+                    <div>
+                        <h4 class="text-xl font-display font-bold text-white mb-6 flex items-center gap-2 border-b border-gray-700 pb-2">
+                            <i class="fas fa-comments text-anime-primary"></i> Language Protocols
+                        </h4>
+                        <div class="space-y-6">
+                            <div class="relative">
+                                <div class="flex justify-between mb-1 text-xs font-mono text-anime-accent">
+                                    <span>ARABIC [NATIVE]</span>
+                                    <span>100%</span>
+                                </div>
+                                <div class="w-full bg-anime-bg3 h-3 skew-x-[-20deg] border border-gray-700 overflow-hidden">
+                                    <div class="bg-anime-primary h-full" style="width: 100%; box-shadow: 0 0 10px #ff00cc;"></div>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <div class="flex justify-between mb-1 text-xs font-mono text-anime-accent">
+                                    <span>ENGLISH [FLUENT]</span>
+                                    <span>90%</span>
+                                </div>
+                                <div class="w-full bg-anime-bg3 h-3 skew-x-[-20deg] border border-gray-700 overflow-hidden">
+                                    <div class="bg-anime-primary h-full" style="width: 90%; box-shadow: 0 0 10px #ff00cc;"></div>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <div class="flex justify-between mb-1 text-xs font-mono text-anime-accent">
+                                    <span>TAMAZIGHT</span>
+                                    <span>75%</span>
+                                </div>
+                                <div class="w-full bg-anime-bg3 h-3 skew-x-[-20deg] border border-gray-700 overflow-hidden">
+                                    <div class="bg-anime-primary h-full" style="width: 75%; box-shadow: 0 0 10px #ff00cc;"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
+            </div>
+        </section>
 
-                <!-- Interests Card -->
-                <section class="bg-brand-cardbg p-6 rounded-lg shadow-xl border border-gray-200 animate-on-scroll transition duration-300 ease-out hover:shadow-2xl hover:scale-[1.02]">
-                    <h3 class="text-2xl font-semibold text-brand-accent mb-4 border-b border-brand-accent/50 pb-2">INTEREST</h3>
-                    <div class="flex gap-4">
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Designing</span>
-                        <span class="bg-brand-lightbg px-4 py-2 rounded-full text-brand-darktext font-medium transition duration-200 hover:bg-brand-accent hover:text-white cursor-default">Gaming</span>
+        <!-- Experience & Education Section -->
+        <section id="experience" class="px-8 py-20 border-b border-anime-secondary/30">
+            <div class="max-w-5xl mx-auto">
+                <div class="mb-12 flex items-end gap-4">
+                    <h2 class="text-5xl font-display font-bold text-white neon-text-pink">03</h2>
+                    <h3 class="text-3xl font-display font-bold text-anime-accent uppercase">Quest Log</h3>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Work History -->
+                    <div class="anime-card p-6">
+                        <h3 class="text-xl font-display font-bold text-white mb-6 border-l-4 border-anime-primary pl-3">Career History</h3>
+                        <div class="space-y-8 relative pl-4 border-l border-gray-700 ml-2">
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[21px] top-1 w-3 h-3 bg-anime-bg border-2 border-anime-accent rounded-full"></div>
+                                <span class="text-xs font-mono text-anime-primary mb-1 block">2019-2021 | 2023-PRESENT</span>
+                                <h4 class="text-lg font-bold text-white">Teaching English & IT</h4>
+                                <p class="text-gray-400 text-xs uppercase tracking-wider mb-2">Private Centers</p>
+                                <p class="text-gray-400 text-sm">Instructing new recruits in English communication and basic terminal usage (IT) at various outposts in Ait Ourir.</p>
+                            </div>
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[21px] top-1 w-3 h-3 bg-anime-bg border-2 border-anime-accent rounded-full"></div>
+                                <span class="text-xs font-mono text-anime-primary mb-1 block">2021 - PRESENT</span>
+                                <h4 class="text-lg font-bold text-white">Graphic Design</h4>
+                                <p class="text-gray-400 text-xs uppercase tracking-wider mb-2">Freelance / Centers</p>
+                                <p class="text-gray-400 text-sm">Creating visual propaganda (designs, posters) and managing comms channels for multiple factions.</p>
+                            </div>
+                        </div>
                     </div>
-                </section>
 
-            </aside>
-        </main>
+                    <!-- Education -->
+                    <div class="anime-card p-6">
+                        <h3 class="text-xl font-display font-bold text-white mb-6 border-l-4 border-anime-primary pl-3">Education Data</h3>
+                        <div class="space-y-8 relative pl-4 border-l border-gray-700 ml-2">
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[21px] top-1 w-3 h-3 bg-anime-bg border-2 border-anime-accent rounded-full"></div>
+                                <span class="text-xs font-mono text-anime-primary mb-1 block">CURRENT</span>
+                                <h4 class="text-lg font-bold text-white">University Student</h4>
+                                <p class="text-gray-400 text-xs uppercase tracking-wider mb-2">FLSH University</p>
+                                <p class="text-gray-400 text-sm">Acquiring advanced knowledge database. Current Level: BAC+1.</p>
+                            </div>
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[21px] top-1 w-3 h-3 bg-anime-bg border-2 border-anime-accent rounded-full"></div>
+                                <span class="text-xs font-mono text-anime-primary mb-1 block">2021 - 2023</span>
+                                <h4 class="text-lg font-bold text-white">Baccalaureate Diplomas</h4>
+                                <p class="text-gray-400 text-xs uppercase tracking-wider mb-2">High School</p>
+                                <p class="text-gray-400 text-sm">Successfully completed dual primary education modules.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <!-- Footer -->
-        <footer class="text-center text-gray-500 mt-12 pt-6 border-t border-gray-200">
-            <p>&copy; 2025 Khalil Itto. All rights reserved.</p>
-        </footer>
+        <!-- Certificates Section -->
+        <section id="certificates" class="px-8 py-20 border-b border-anime-secondary/30">
+            <div class="max-w-5xl mx-auto">
+                <div class="mb-12 flex items-end gap-4">
+                    <h2 class="text-5xl font-display font-bold text-white neon-text-pink">04</h2>
+                    <h3 class="text-3xl font-display font-bold text-anime-accent uppercase">Achievements</h3>
+                </div>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Certificate Cards -->
+                    <div class="anime-card p-6 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-anime-bg2 flex items-center justify-center rounded border border-anime-accent text-anime-accent text-2xl">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold font-display text-sm">CCNA</h4>
+                            <p class="text-xs text-gray-400">Cisco Certified</p>
+                        </div>
+                    </div>
+                    <div class="anime-card p-6 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-anime-bg2 flex items-center justify-center rounded border border-anime-accent text-anime-accent text-2xl">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold font-display text-sm">Oracle Cloud AI</h4>
+                            <p class="text-xs text-gray-400">Certified Associate</p>
+                        </div>
+                    </div>
+                    <div class="anime-card p-6 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-anime-bg2 flex items-center justify-center rounded border border-anime-accent text-anime-accent text-2xl">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold font-display text-sm">Network Security</h4>
+                            <p class="text-xs text-gray-400">Mindluster</p>
+                        </div>
+                    </div>
+                    <div class="anime-card p-6 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-anime-bg2 flex items-center justify-center rounded border border-anime-accent text-anime-accent text-2xl">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold font-display text-sm">Basic IT</h4>
+                            <p class="text-xs text-gray-400">Dell/EFE</p>
+                        </div>
+                    </div>
+                    <div class="anime-card p-6 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-anime-bg2 flex items-center justify-center rounded border border-anime-accent text-anime-accent text-2xl">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold font-display text-sm">CAEDEL Program</h4>
+                            <p class="text-xs text-gray-400">Entrepreneurship</p>
+                        </div>
+                    </div>
+                    <div class="anime-card p-6 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-anime-bg2 flex items-center justify-center rounded border border-anime-accent text-anime-accent text-2xl">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold font-display text-sm">Ministry of Youth</h4>
+                            <p class="text-xs text-gray-400">Certificates</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="px-8 py-20 border-b border-anime-secondary/30">
+            <div class="max-w-5xl mx-auto">
+                <div class="mb-12 flex items-end gap-4">
+                    <h2 class="text-5xl font-display font-bold text-white neon-text-pink">05</h2>
+                    <h3 class="text-3xl font-display font-bold text-anime-accent uppercase">Visual Database</h3>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="gallery-grid">
+                    <!-- Images styled as data blocks -->
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="photo_5_2025-11-06_14-41-58.jpg" alt="Gallery Image" loading="lazy">
+                    </div>
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="photo_8_2025-11-06_14-41-58.jpg" alt="Gallery Image" loading="lazy">
+                    </div>
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="photo_10_2025-11-06_14-41-58.jpg" alt="Gallery Image" loading="lazy">
+                    </div>
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="photo_6_2025-11-06_14-41-58.jpg" alt="Gallery Image" loading="lazy">
+                    </div>
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="photo_7_2025-11-06_14-41-58.jpg" alt="Gallery Image" loading="lazy">
+                    </div>
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="photo_9_2025-11-06_14-41-58.jpg" alt="Gallery Image" loading="lazy">
+                    </div>
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="photo_3_2025-11-06_14-41-58.jpg" alt="Gallery Image" loading="lazy">
+                    </div>
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="IMG-20251108-WA0009.jpg" alt="Gallery Image" loading="lazy">
+                    </div>
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="IMG-20251108-WA0012.jpg" alt="Gallery Image" loading="lazy">
+                    </div>
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="IMG-20251108-WA0013.jpg" alt="Gallery Image" loading="lazy">
+                    </div>
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="IMG-20251108-WA0014.jpg" alt="Gallery Image" loading="lazy">
+                    </div>
+                    <!-- The New 3 Images Added -->
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="WhatsApp Image 2025-11-08 at 18.58.59_8fd1205e.jpg" alt="CCNA Certificate" loading="lazy">
+                    </div>
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="WhatsApp Image 2025-11-08 at 18.59.02_4950d841.jpg" alt="CAEDEL Certificate" loading="lazy">
+                    </div>
+                    <div class="gallery-item aspect-square bg-gray-800">
+                        <img src="WhatsApp Image 2025-11-08 at 18.59.01_ad9fa44a.jpg" alt="Oracle Certificate" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="px-8 py-20 bg-anime-bg3/30">
+            <div class="max-w-5xl mx-auto text-center">
+                <div class="mb-12">
+                    <p class="text-gray-500 uppercase tracking-widest text-sm font-bold mb-2">Communication</p>
+                    <h2 class="text-4xl font-display font-bold text-white neon-text">Establish Link</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <div class="anime-card p-8">
+                        <i class="fas fa-map-marker-alt text-3xl text-anime-accent mb-4 animate-bounce"></i>
+                        <h4 class="text-xl font-bold text-white mb-2 font-display">Coordinates</h4>
+                        <p class="text-gray-400 text-sm">Ait Ourir Amekdar,<br>Marrakesh, Morocco</p>
+                    </div>
+                    <div class="anime-card p-8">
+                        <i class="fas fa-envelope text-3xl text-anime-accent mb-4"></i>
+                        <h4 class="text-xl font-bold text-white mb-2 font-display">Email</h4>
+                        <p class="text-gray-400 text-sm break-all">khalilitto04@gmail.com</p>
+                    </div>
+                    <div class="anime-card p-8">
+                        <i class="fas fa-phone text-3xl text-anime-accent mb-4"></i>
+                        <h4 class="text-xl font-bold text-white mb-2 font-display">Comms</h4>
+                        <p class="text-gray-400 text-sm">+212 613 539 159</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-center gap-6">
+                    <a href="https://www.facebook.com/khalildroid/" target="_blank" class="w-12 h-12 flex items-center justify-center rounded clip-path-angle bg-anime-bg border border-anime-primary text-white hover:bg-anime-primary hover:shadow-[0_0_15px_#ff00cc] transition-all duration-300"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/khalil.itto/" target="_blank" class="w-12 h-12 flex items-center justify-center rounded clip-path-angle bg-anime-bg border border-anime-primary text-white hover:bg-anime-primary hover:shadow-[0_0_15px_#ff00cc] transition-all duration-300"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@khalildroid" target="_blank" class="w-12 h-12 flex items-center justify-center rounded clip-path-angle bg-anime-bg border border-anime-primary text-white hover:bg-anime-primary hover:shadow-[0_0_15px_#ff00cc] transition-all duration-300"><i class="fab fa-youtube"></i></a>
+                    <a href="https://github.com/khalildroid" target="_blank" class="w-12 h-12 flex items-center justify-center rounded clip-path-angle bg-anime-bg border border-anime-primary text-white hover:bg-anime-primary hover:shadow-[0_0_15px_#ff00cc] transition-all duration-300"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/khalil-itto" target="_blank" class="w-12 h-12 flex items-center justify-center rounded clip-path-angle bg-anime-bg border border-anime-primary text-white hover:bg-anime-primary hover:shadow-[0_0_15px_#ff00cc] transition-all duration-300"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="fixed inset-0 bg-black/90 hidden z-[100] flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <!-- Decorative Corners for Lightbox -->
+        <div class="absolute top-4 left-4 w-16 h-16 border-t-4 border-l-4 border-anime-accent"></div>
+        <div class="absolute bottom-4 right-4 w-16 h-16 border-b-4 border-r-4 border-anime-primary"></div>
+        
+        <img id="lightbox-img" src="" alt="Full Size" class="max-w-full max-h-[90vh] rounded border border-anime-accent/50 shadow-[0_0_30px_rgba(0,242,255,0.2)] transform scale-90 transition-transform duration-300">
+        <button id="lightbox-close" class="absolute top-8 right-8 text-white text-4xl hover:text-anime-primary transition-colors">&times;</button>
     </div>
 
-    <!-- New Lightbox Modal HTML (placed before the script) -->
-    <div id="lightbox">
-        <img id="lightbox-img" src="" alt="Enlarged gallery view">
-    </div>
-
-    <!-- JavaScript for Animations -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- IntersectionObserver for general fade-in-up animations ---
-            const animatedElements = document.querySelectorAll('.animate-on-scroll');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1 // Trigger when 10% of the element is visible
-            });
+        // Typing Effect
+        const phrases = ["Web Developer", "Content Creator", "Graphic Designer", "IT Educator"];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingText = document.getElementById("typing-text");
 
-            animatedElements.forEach(el => {
-                observer.observe(el);
-            });
-
-            // --- IntersectionObserver for progress bars ---
-            const progressBars = document.querySelectorAll('.progress-fill');
-            
-            const progressObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const bar = entry.target;
-                        const targetWidth = bar.getAttribute('data-width');
-                        setTimeout(() => { // Small delay for better visual effect
-                            bar.style.width = targetWidth;
-                        }, 250); // Staggered delay
-                        progressObserver.unobserve(bar);
-                    }
-                });
-            }, {
-                threshold: 0.5 // Trigger when 50% of the bar is visible
-            });
-
-            progressBars.forEach(bar => {
-                progressObserver.observe(bar);
-            });
-
-            // --- Typing Effect ---
-            const typingTextElement = document.getElementById('typing-text');
-            // Phrases from the resume
-            const phrases = ['WEB DEVELOPER', 'CONTENT CREATOR', 'GRAPHIC DESIGNER', 'IT EDUCATOR', 'YOUTUBER'];
-            let phraseIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-
-            function type() {
-                const currentPhrase = phrases[phraseIndex];
-                let displayText = '';
-
-                if (isDeleting) {
-                    // Deleting
-                    displayText = currentPhrase.substring(0, charIndex - 1);
-                    charIndex--;
-                } else {
-                    // Typing
-                    displayText = currentPhrase.substring(0, charIndex + 1);
-                    charIndex++;
-                }
-
-                if (typingTextElement) {
-                    typingTextElement.textContent = displayText;
-                }
-
-                let typeSpeed = 150;
-                if (isDeleting) {
-                    typeSpeed /= 2; // Faster when deleting
-                }
-
-                // Check if word is complete
-                if (!isDeleting && charIndex === currentPhrase.length) {
-                    typeSpeed = 2000; // Pause at end of word
-                    isDeleting = true;
-                } 
-                // Check if word is fully deleted
-                else if (isDeleting && charIndex === 0) {
-                    isDeleting = false;
-                    phraseIndex = (phraseIndex + 1) % phrases.length; // Move to next phrase
-                    typeSpeed = 500; // Pause before typing new word
-                }
-
-                setTimeout(type, typeSpeed);
-            };
-
-            // Start the typing effect
-            if (typingTextElement) {
-                type();
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            if (isDeleting) {
+                typingText.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingText.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
             }
 
-            // --- New Lightbox Gallery Script ---
-            const gallery = document.getElementById('gallery');
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-
-            if (gallery && lightbox && lightboxImg) {
-                // Add click listener to all images inside the gallery
-                gallery.addEventListener('click', (e) => {
-                    if (e.target.tagName === 'IMG') {
-                        const imgSrc = e.target.getAttribute('src');
-                        lightboxImg.setAttribute('src', imgSrc);
-                        lightbox.classList.add('active');
-                    }
-                });
-
-                // Add click listener to the lightbox itself to close it
-                lightbox.addEventListener('click', (e) => {
-                    // Only close if the click is on the background (the modal itself)
-                    if (e.target.id === 'lightbox') {
-                        lightbox.classList.remove('active');
-                    }
-                });
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                setTimeout(type, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                setTimeout(type, 500);
+            } else {
+                setTimeout(type, isDeleting ? 50 : 100);
             }
-            
+        }
+        type();
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if(isMenuOpen) {
+                sidebar.classList.remove('-translate-x-full');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+            }
         });
+
+        // Close sidebar when clicking a link on mobile
+        document.querySelectorAll('#sidebar a').forEach(link => {
+            link.addEventListener('click', () => {
+                if(window.innerWidth < 768) {
+                    sidebar.classList.add('-translate-x-full');
+                    isMenuOpen = false;
+                }
+            });
+        });
+
+        // Gallery Lightbox
+        const galleryItems = document.querySelectorAll('.gallery-item img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        galleryItems.forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightbox.classList.remove('hidden');
+                // Small delay to allow display:flex to apply before adding opacity class
+                setTimeout(() => {
+                    lightbox.classList.remove('opacity-0');
+                    lightboxImg.classList.remove('scale-90');
+                    lightboxImg.classList.add('scale-100');
+                }, 10);
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.add('opacity-0');
+            lightboxImg.classList.remove('scale-100');
+            lightboxImg.classList.add('scale-90');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+            }, 300);
+        }
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
     </script>
 </body>
 </html>
